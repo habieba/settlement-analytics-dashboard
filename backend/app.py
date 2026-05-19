@@ -13,8 +13,10 @@ from models import Base, Client
 Base.metadata.create_all(engine)
 
 from routes.clients import clients_bp
+from routes.programs import programs_bp
 from routes.quality import quality_bp
 app.register_blueprint(clients_bp)
+app.register_blueprint(programs_bp)
 app.register_blueprint(quality_bp)
 
 

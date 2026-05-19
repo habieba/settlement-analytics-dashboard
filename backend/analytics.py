@@ -1,13 +1,12 @@
-from sqlalchemy import func
+from sqlalchemy import func, case
 from models import Client
 
 
-# ── helpers ──────────────────────────────────────────────────────────────────
+# ── helpers ───────────────────────────────────────────────────────────────────
 
 def _missing_fields(client) -> list[str]:
     """Return names of quality fields missing for a single client record."""
     missing = []
-    # completion_date only counts as missing for completed records
     if client.status == "completed" and client.completion_date is None:
         missing.append("completion_date")
     if client.notes is None:
@@ -54,6 +53,43 @@ def get_origins(session) -> list:
     return [{"country": row.country_of_origin, "count": row.count} for row in rows]
 
 
+# ── programs ──────────────────────────────────────────────────────────────────
+
+def get_intake_trends(session) -> list:
+    rows = (
+        session.query(
+            func.strftime("%Y-%m", Client.intake_date).label("month"),
+            func.count(Client.id).label("count"),
+        )
+        .group_by("month")
+        .order_by("month")
+        .all()
+    )
+    return [{"month": row.month, "count": row.count} for row in rows]
+
+
+def get_program_completion(session) -> list:
+    rows = (
+        session.query(
+            Client.program_type,
+            func.count(Client.id).label("total"),
+            func.count(case((Client.status == "completed", Client.id))).label("completed"),
+        )
+        .group_by(Client.program_type)
+        .all()
+    )
+    result = []
+    for row in rows:
+        rate = round(row.completed / row.total * 100, 1) if row.total else 0.0
+        result.append({
+            "program": row.program_type,
+            "total": row.total,
+            "completed": row.completed,
+            "rate": rate,
+        })
+    return sorted(result, key=lambda x: x["rate"], reverse=True)
+
+
 # ── clients ───────────────────────────────────────────────────────────────────
 
 def get_clients(session, page: int, per_page: int,
@@ -68,7 +104,7 @@ def get_clients(session, page: int, per_page: int,
         query = query.filter(Client.country_of_origin == country)
 
     total = query.count()
-    pages = max(1, -(-total // per_page))  # ceiling division
+    pages = max(1, -(-total // per_page))
     records = query.order_by(Client.id).offset((page - 1) * per_page).limit(per_page).all()
 
     return {
