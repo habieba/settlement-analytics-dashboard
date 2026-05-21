@@ -1,6 +1,147 @@
-# settlement-analytics-dashboard
+# Settlement Analytics Dashboard
 
-A full-stack analytics dashboard simulating a newcomer settlement data environment. 
-Built to demonstrate data pipeline design, SQL database management, interactive 
-visualization, and translating complex data into plain-language narratives for 
-non-technical audiences.
+A full-stack analytics dashboard that simulates the data environment of a newcomer settlement organisation. Built to demonstrate end-to-end data skills: designing a relational database with SQLAlchemy, writing Pandas aggregations and SQL queries, generating interactive Plotly charts served via a Flask REST API, and translating those charts into plain-language narratives that a non-technical programme manager could act on. Every page maps directly to a real workflow in the social sector — from monitoring active caseloads to identifying data quality gaps that affect outcome reporting.
+
+---
+
+## Live Demo
+
+🔗 [settlement-analytics-dashboard.vercel.app](#) *(add URL after deployment)*
+
+---
+
+## Features
+
+- **Overview** — Four KPI cards (total clients, completion rate, active caseload, data quality score) plus three Plotly charts: monthly intake trend, programme completion rates, and a country-of-origin donut. Each chart includes a dynamically generated plain-English narrative summary.
+
+- **Programs** — Horizontal bar chart showing completion rate per programme, colour-coded by performance tier (high / mid / low). Includes a summary bar with an overall rate, a full breakdown table (enrolled, completed, withdrawn, active per programme), and an analyst narrative naming the best and worst performers.
+
+- **Clients** — Paginated, filterable table of all 200 synthetic client records. Filter by status, programme type, or country of origin. Status shown as colour-coded badges; completion date displays "—" for active and withdrawn clients.
+
+- **Data Quality** — Quality score card with a field-level breakdown (notes missing, language spoken missing, etc.), a flagged records table showing every client missing two or more fields with colour-tagged missing field chips, and a narrative that identifies the most problematic field and the programme most affected.
+
+---
+
+## Tech Stack
+
+| Layer      | Technology                                |
+|------------|-------------------------------------------|
+| Backend    | Python 3.11+, Flask, SQLAlchemy           |
+| Database   | SQLite                                    |
+| Analysis   | Pandas, NumPy                             |
+| Charts     | Plotly (JSON) → Plotly.js (frontend)      |
+| Frontend   | React 18, Vite, Tailwind CSS              |
+| Deployment | Vercel (frontend), Render (backend)       |
+
+---
+
+## Running Locally
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/your-username/settlement-analytics-dashboard.git
+cd settlement-analytics-dashboard
+```
+
+### 2. Backend
+
+```bash
+cd backend
+
+# Create and activate a virtual environment
+python3 -m venv .venv
+source .venv/bin/activate      # Windows: .venv\Scripts\activate
+
+# Install dependencies
+pip install -r ../requirements.txt
+
+# Create the database and seed 200 synthetic client records
+python seed_data.py
+
+# Start the Flask development server
+python app.py
+# Runs on http://127.0.0.1:5000
+```
+
+### 3. Frontend
+
+Open a second terminal from the repo root:
+
+```bash
+cd frontend
+
+# Install dependencies
+npm install
+
+# Start the Vite dev server
+npm run dev
+# Runs on http://localhost:5173
+```
+
+The Vite dev server proxies all `/api` requests to Flask at `127.0.0.1:5000`, so no CORS configuration is needed locally.
+
+Open **http://localhost:5173** in your browser.
+
+---
+
+## Project Structure
+
+```
+settlement-analytics-dashboard/
+├── CLAUDE.md
+├── README.md
+├── requirements.txt
+├── render.yaml
+│
+├── backend/
+│   ├── app.py                 ← Flask app + route registration
+│   ├── db.py                  ← SQLAlchemy engine + session factory
+│   ├── models.py              ← SQLAlchemy Client model
+│   ├── analytics.py           ← Pandas/SQLAlchemy analysis functions
+│   ├── seed_data.py           ← Generates 200 synthetic client records
+│   ├── Procfile
+│   └── routes/
+│       ├── clients.py         ← /api/clients, /api/overview/kpis, /api/origins
+│       ├── programs.py        ← /api/programs/completion, /api/programs/trends
+│       └── quality.py         ← /api/quality/flags, /api/quality/score
+│
+├── frontend/
+│   ├── vercel.json
+│   ├── vite.config.js
+│   ├── tailwind.config.js
+│   └── src/
+│       ├── App.jsx
+│       ├── pages/
+│       │   ├── Overview.jsx
+│       │   ├── Programs.jsx
+│       │   ├── Clients.jsx
+│       │   └── DataQuality.jsx
+│       └── components/
+│           ├── KPICard.jsx
+│           ├── NarrativeSummary.jsx
+│           ├── PlotlyChart.jsx
+│           └── Sidebar.jsx
+│
+└── data/
+    └── settlement.db          ← Generated by seed_data.py (gitignored)
+```
+
+---
+
+## Screenshots
+
+*Add screenshots after deployment.*
+
+| Page | Screenshot |
+|------|------------|
+| Overview | *(coming soon)* |
+| Programs | *(coming soon)* |
+| Clients | *(coming soon)* |
+| Data Quality | *(coming soon)* |
+
+---
+
+## Why I Built This
+
+Data work in the social sector is rarely about the data itself — it's about helping programme managers, funders, and frontline workers make faster, better-informed decisions. I built this project to demonstrate that I can take raw case management data from intake to insight: cleaning it, aggregating it, and presenting it in a form that a non-technical audience can read and act on without needing to open a spreadsheet. The data quality panel in particular reflects a real challenge in NGO settings, where incomplete records quietly undermine the outcome reporting that funders depend on.

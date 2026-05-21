@@ -29,11 +29,9 @@ def get_kpis(session) -> dict:
     denominator = completed + withdrawn
     completion_rate = round(completed / denominator * 100, 1) if denominator else 0.0
 
-    complete_records = session.query(Client).filter(
-        Client.notes.isnot(None),
-        Client.language_spoken.isnot(None),
-    ).count()
-    quality_score = round(complete_records / total * 100, 1) if total else 0.0
+    # Use the same flagged definition as /api/quality/score: missing 2+ fields
+    flagged = sum(1 for c in session.query(Client).all() if len(_missing_fields(c)) >= 2)
+    quality_score = round((total - flagged) / total * 100, 1) if total else 0.0
 
     return {
         "total_clients": total,
