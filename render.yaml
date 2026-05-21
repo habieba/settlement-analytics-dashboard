@@ -2,14 +2,13 @@ services:
   - type: web
     name: settlement-analytics-backend
     env: python
-    # requirements.txt lives at repo root; seed runs from backend/ so the DB
-    # ends up at backend/settlement.db, matching the DATABASE_URL below.
-    buildCommand: pip install -r requirements.txt && cd backend && python seed_data.py
-    startCommand: gunicorn --chdir backend app:app
+    rootDir: backend
+    buildCommand: pip install -r ../requirements.txt && python seed_data.py
+    startCommand: gunicorn app:app
     envVars:
       - key: DATABASE_URL
         value: sqlite:///settlement.db
       - key: FLASK_ENV
         value: production
       - key: FRONTEND_URL
-        sync: false   # Set this in the Render dashboard after your Vercel URL is known
+        sync: false
