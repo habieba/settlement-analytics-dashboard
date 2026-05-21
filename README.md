@@ -1,12 +1,12 @@
 # Settlement Analytics Dashboard
 
-A full-stack analytics dashboard that simulates the data environment of a newcomer settlement organisation. Built to demonstrate end-to-end data skills: designing a relational database with SQLAlchemy, writing Pandas aggregations and SQL queries, generating interactive Plotly charts served via a Flask REST API, and translating those charts into plain-language narratives that a non-technical programme manager could act on. Every page maps directly to a real workflow in the social sector — from monitoring active caseloads to identifying data quality gaps that affect outcome reporting.
+A full-stack analytics dashboard that simulates the data environment of a newcomer settlement organisation. Built to demonstrate end-to-end data skills: designing a relational database with SQLAlchemy, writing Pandas aggregations and SQL queries, generating interactive Plotly charts served via a Flask REST API, and translating those charts into plain-language narratives that a non-technical programme manager could act on. Every page maps directly to a real workflow in the social sector, from monitoring active caseloads to identifying data quality gaps that affect outcome reporting.
 
 ---
 
 ## Live Demo
 
-🔗 [settlement-analytics-dashboard.vercel.app](#) *(add URL after deployment)*
+[🔗 [settlement-analytics-dashboard.vercel.app](#)](https://settlement-analytics-dashboard-b1roaal7i-habiebas-projects.vercel.app/)
 
 ---
 
@@ -131,14 +131,18 @@ settlement-analytics-dashboard/
 
 ## Screenshots
 
-*Add screenshots after deployment.*
+
+
 
 | Page | Screenshot |
 |------|------------|
-| Overview | *(coming soon)* |
-| Programs | *(coming soon)* |
-| Clients | *(coming soon)* |
-| Data Quality | *(coming soon)* |
+| Overview | <img width="1258" height="1215" alt="image" src="https://github.com/user-attachments/assets/3b3fb168-0b30-44c8-9975-8d17a80dbc34" />|
+| Programs | <img width="1243" height="1246" alt="image" src="https://github.com/user-attachments/assets/4688a98d-1a4f-4447-8bda-0fcc9981a0c7" />
+ |
+| Clients | <img width="1257" height="1278" alt="image" src="https://github.com/user-attachments/assets/d90906d0-712d-4b67-82f3-0b7a50547f86" />
+|
+| Data Quality | <img width="1274" height="1272" alt="image" src="https://github.com/user-attachments/assets/645065a9-a08b-4ec1-89fb-78e3cde739a6" />
+|
 
 ---
 
