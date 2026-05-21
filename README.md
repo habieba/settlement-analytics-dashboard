@@ -144,4 +144,4 @@ settlement-analytics-dashboard/
 
 ## Why I Built This
 
-Data work in the social sector is rarely about the data itself — it's about helping programme managers, funders, and frontline workers make faster, better-informed decisions. I built this project to demonstrate that I can take raw case management data from intake to insight: cleaning it, aggregating it, and presenting it in a form that a non-technical audience can read and act on without needing to open a spreadsheet. The data quality panel in particular reflects a real challenge in NGO settings, where incomplete records quietly undermine the outcome reporting that funders depend on.
+Data work in the social sector is rarely about the data itself but about helping administrators make faster, better-informed decisions. I built this project to demonstrate that I can take raw case management data from intake to insight: cleaning it, aggregating it, and presenting it in a form that a non-technical audience can read and act on without needing to open a spreadsheet. 
