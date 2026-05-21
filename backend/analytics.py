@@ -74,6 +74,8 @@ def get_program_completion(session) -> list:
             Client.program_type,
             func.count(Client.id).label("total"),
             func.count(case((Client.status == "completed", Client.id))).label("completed"),
+            func.count(case((Client.status == "withdrawn", Client.id))).label("withdrawn"),
+            func.count(case((Client.status == "active",    Client.id))).label("active"),
         )
         .group_by(Client.program_type)
         .all()
@@ -85,6 +87,8 @@ def get_program_completion(session) -> list:
             "program": row.program_type,
             "total": row.total,
             "completed": row.completed,
+            "withdrawn": row.withdrawn,
+            "active": row.active,
             "rate": rate,
         })
     return sorted(result, key=lambda x: x["rate"], reverse=True)
