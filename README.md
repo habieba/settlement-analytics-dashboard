@@ -6,7 +6,7 @@ A full-stack analytics dashboard that simulates the data environment of a newcom
 
 ## Live Demo
 
-🔗 [settlement-analytics-dashboard-b1roaal7i-habiebas-projects.vercel.app](#)
+🔗 [settlement-analytics-dashboard-b1roaal7i-habiebas-projects.vercel.app(https://settlement-analytics-dashboard-git-main-habiebas-projects.vercel.app/)](#)
 
 ---
 
